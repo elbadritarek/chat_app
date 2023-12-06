@@ -1,3 +1,4 @@
+import 'package:chatapp/views/home_view.dart';
 import 'package:flutter/material.dart';
 
 void main(List<String> args) {
@@ -9,8 +10,9 @@ class chatApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(),
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: onBoardingPage(),
     );
   }
 }
