@@ -1,4 +1,4 @@
-import 'package:chatapp/views/home_view.dart';
+import 'package:chatapp/views/on_board.dart';
 import 'package:flutter/material.dart';
 
 void main(List<String> args) {
