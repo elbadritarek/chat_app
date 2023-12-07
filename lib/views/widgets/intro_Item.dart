@@ -67,7 +67,7 @@ class introItem extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushReplacement(context,
                               MaterialPageRoute(builder: (context) {
-                            return HomeView();
+                            return SignInView();
                           }));
                         },
                         child: Text("Sikp")),

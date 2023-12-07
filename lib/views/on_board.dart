@@ -25,7 +25,7 @@ class _onBoardingPageState extends State<onBoardingPage> {
     } else {
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-        return const HomeView();
+        return const SignInView();
       }));
     }
   }
@@ -79,7 +79,7 @@ class _onBoardingPageState extends State<onBoardingPage> {
                 else
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return HomeView();
+                    return SignInView();
                   }));
               });
             },
@@ -102,7 +102,7 @@ class _onBoardingPageState extends State<onBoardingPage> {
                 else
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return HomeView();
+                    return SignInView();
                   }));
               });
             },
@@ -124,7 +124,7 @@ class _onBoardingPageState extends State<onBoardingPage> {
                 else
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return HomeView();
+                    return SignInView();
                   }));
               });
             },
