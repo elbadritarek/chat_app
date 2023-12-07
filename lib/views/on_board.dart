@@ -48,7 +48,7 @@ class _onBoardingPageState extends State<onBoardingPage> {
                   children: [
                     for (int i = 0; i < 3; i++)
                       if (selectedIndex == i)
-                        onProgressDot(Colors.blue)
+                        onProgressDot(const Color.fromRGBO(33, 150, 243, 1))
                       else
                         onProgressDot(Colors.grey[300]!)
                   ],
@@ -63,6 +63,10 @@ class _onBoardingPageState extends State<onBoardingPage> {
         physics: NeverScrollableScrollPhysics(),
         children: [
           introItem(
+            title: "Connect with the World",
+            image: "assets/images/chatapp-high-resolution-logo.png",
+            desc:
+                "Welcome to chatApp, the ultimate platform to connect with anyone, anywhere!",
             control: control,
             onPressed: () {
               control.nextPage(
@@ -81,6 +85,11 @@ class _onBoardingPageState extends State<onBoardingPage> {
             },
           ),
           introItem(
+            desc:
+                "stay connected with your loved ones no matter where you are in the world. You can even make group calis with up to 10 people at once",
+            image: "assets/images/video.png",
+            box: BoxFit.fill,
+            title: "Voice and video calling",
             control: control,
             onPressed: () {
               control.nextPage(
@@ -99,6 +108,10 @@ class _onBoardingPageState extends State<onBoardingPage> {
             },
           ),
           introItem(
+            desc:
+                "Delve into various chat formats - from private conversations to lively group chats. Share photos, videos, and more!",
+            image: "assets/images/intro1.png",
+            title: "Start Chatting Today!",
             control: control,
             onPressed: () {
               control.nextPage(

@@ -6,10 +6,17 @@ class introItem extends StatelessWidget {
     super.key,
     required this.control,
     required this.onPressed,
+    required this.image,
+    required this.title,
+    required this.desc,
+    this.box,
   });
   final PageController control;
   final void Function()? onPressed;
-
+  final BoxFit? box;
+  final String image;
+  final String title;
+  final String desc;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,51 +24,58 @@ class introItem extends StatelessWidget {
         Padding(
             padding: EdgeInsets.only(left: 15, top: 20),
             child: Text(
-              "Voice and video calling",
+              title,
               style: TextStyle(
-                fontSize: 65,
+                fontSize: 60,
                 fontWeight: FontWeight.w700,
               ),
             )),
         Image.asset(
-          "assets/images/intro1.png",
+          image,
+          fit: box,
           height: 450,
         ),
-        Container(
-          padding: EdgeInsets.only(bottom: 10),
-          decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(12), topRight: Radius.circular(12))),
-          child: Column(
-            children: [
-              Padding(
-                padding:
-                    EdgeInsets.only(right: 40, left: 40, top: 20, bottom: 30),
-                child: Text(
-                    "stay connected with your loved ones no matter where you are in the world. You can even make group calis with up to 10 people at once"),
-              ),
-              Divider(
-                indent: 25,
-                endIndent: 25,
-                height: 10,
-                color: Colors.white,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) {
-                          return HomeView();
-                        }));
-                      },
-                      child: Text("Sikp")),
-                  ElevatedButton(onPressed: onPressed, child: Text("Next"))
-                ],
-              )
-            ],
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.only(bottom: 10),
+            height: double.maxFinite,
+            decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12))),
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: 40,
+                    left: 40,
+                    top: 20,
+                  ),
+                  child: Text(desc),
+                ),
+                Divider(
+                  indent: 25,
+                  endIndent: 25,
+                  height: 10,
+                  color: Colors.white,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return HomeView();
+                          }));
+                        },
+                        child: Text("Sikp")),
+                    ElevatedButton(onPressed: onPressed, child: Text("Next"))
+                  ],
+                )
+              ],
+            ),
           ),
         )
       ],
