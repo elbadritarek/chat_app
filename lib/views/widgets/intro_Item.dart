@@ -22,10 +22,10 @@ class introItem extends StatelessWidget {
     return Column(
       children: [
         Padding(
-            padding: EdgeInsets.only(left: 15, top: 20),
+            padding: const EdgeInsets.only(left: 15, top: 20),
             child: Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 60,
                 fontWeight: FontWeight.w700,
               ),
@@ -37,24 +37,24 @@ class introItem extends StatelessWidget {
         ),
         Expanded(
           child: Container(
-            padding: EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10),
             height: double.maxFinite,
             decoration: BoxDecoration(
                 color: Colors.grey[300],
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(12),
                     topRight: Radius.circular(12))),
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     right: 40,
                     left: 40,
                     top: 20,
                   ),
                   child: Text(desc),
                 ),
-                Divider(
+                const Divider(
                   indent: 25,
                   endIndent: 25,
                   height: 10,
@@ -67,11 +67,12 @@ class introItem extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushReplacement(context,
                               MaterialPageRoute(builder: (context) {
-                            return SignInView();
+                            return const SignInView();
                           }));
                         },
-                        child: Text("Sikp")),
-                    ElevatedButton(onPressed: onPressed, child: Text("Next"))
+                        child: const Text("Sikp")),
+                    ElevatedButton(
+                        onPressed: onPressed, child: const Text("Next"))
                   ],
                 )
               ],

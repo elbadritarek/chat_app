@@ -2,7 +2,7 @@ import 'package:chatapp/views/on_board.dart';
 import 'package:flutter/material.dart';
 
 void main(List<String> args) {
-  runApp(chatApp());
+  runApp(const chatApp());
 }
 
 class chatApp extends StatelessWidget {

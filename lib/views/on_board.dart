@@ -36,7 +36,7 @@ class _onBoardingPageState extends State<onBoardingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size(double.infinity, 3),
+        preferredSize: const Size(double.infinity, 3),
         child: Padding(
           padding: const EdgeInsets.only(right: 20.0),
           child: Column(
@@ -60,7 +60,7 @@ class _onBoardingPageState extends State<onBoardingPage> {
       ),
       body: PageView(
         controller: control,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           introItem(
             title: "Connect with the World",
@@ -74,13 +74,14 @@ class _onBoardingPageState extends State<onBoardingPage> {
                   curve: Curves.easeInOut);
 
               setState(() {
-                if (selectedIndex < 2 && selectedIndex >= 0)
+                if (selectedIndex < 2 && selectedIndex >= 0) {
                   selectedIndex++;
-                else
+                } else {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return SignInView();
+                    return const SignInView();
                   }));
+                }
               });
             },
           ),
@@ -97,13 +98,14 @@ class _onBoardingPageState extends State<onBoardingPage> {
                   curve: Curves.easeInOut);
 
               setState(() {
-                if (selectedIndex < 2 && selectedIndex >= 0)
+                if (selectedIndex < 2 && selectedIndex >= 0) {
                   selectedIndex++;
-                else
+                } else {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return SignInView();
+                    return const SignInView();
                   }));
+                }
               });
             },
           ),
@@ -119,13 +121,14 @@ class _onBoardingPageState extends State<onBoardingPage> {
                   curve: Curves.easeInOut);
 
               setState(() {
-                if (selectedIndex < 2 && selectedIndex >= 0)
+                if (selectedIndex < 2 && selectedIndex >= 0) {
                   selectedIndex++;
-                else
+                } else {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return SignInView();
+                    return const SignInView();
                   }));
+                }
               });
             },
           ),
