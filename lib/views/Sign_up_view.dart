@@ -1,9 +1,8 @@
-import 'package:chatapp/views/Sign_up_view.dart';
 import 'package:chatapp/views/widgets/custom_text_from_feild.dart';
 import 'package:flutter/material.dart';
 
-class SignInView extends StatelessWidget {
-  const SignInView({super.key});
+class SignUpView extends StatelessWidget {
+  const SignUpView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class SignInView extends StatelessWidget {
                 height: 100,
               ),
               Text(
-                "Sign In",
+                "Sign Up",
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               )
             ],
@@ -42,6 +41,38 @@ class SignInView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Row(
+                    children: [
+                      Text(
+                        "Your First Name",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  customTextFeild(hintText: "first name"),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Your Last Name",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  customTextFeild(hintText: "last name"),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     children: [
                       Text(
@@ -74,15 +105,12 @@ class SignInView extends StatelessWidget {
                   SizedBox(height: 10),
                   Row(
                     children: [
-                      Text("don't have an account ?"),
+                      Text("alraedy have an account ?"),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return SignUpView();
-                          }));
+                          Navigator.pop(context);
                         },
-                        child: Text(" Sign Up",
+                        child: Text(" Sign In",
                             style: TextStyle(color: Colors.blue)),
                       )
                     ],
