@@ -1,4 +1,4 @@
-import 'package:chatapp/views/home_view.dart';
+import 'package:chatapp/views/Sign_In_view.dart';
 import 'package:flutter/material.dart';
 
 class introItem extends StatelessWidget {

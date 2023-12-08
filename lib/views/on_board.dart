@@ -1,4 +1,4 @@
-import 'package:chatapp/views/home_view.dart';
+import 'package:chatapp/views/Sign_In_view.dart';
 import 'package:chatapp/views/widgets/intro_Item.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
