@@ -9,7 +9,7 @@ class SignInView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
           preferredSize: Size(12, 20),
           child: SizedBox(
             height: 20,
@@ -22,13 +22,13 @@ class SignInView extends StatelessWidget {
                 'assets/images/icon.png',
                 height: 100,
               ),
-              Text(
+              const Text(
                 "Sign In",
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 60,
           ),
           Expanded(
@@ -36,7 +36,7 @@ class SignInView extends StatelessWidget {
             height: double.maxFinite,
             decoration: BoxDecoration(
                 color: Colors.grey[300],
-                borderRadius: BorderRadius.horizontal(
+                borderRadius: const BorderRadius.horizontal(
                     right: Radius.circular(18), left: Radius.circular(18))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -55,11 +55,11 @@ class SignInView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       customTextFeild(hintText: "Example@gmail.com"),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
@@ -71,22 +71,22 @@ class SignInView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       customTextFeild(hintText: "*********"),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
-                          Text("don't have an account ?"),
+                          const Text("don't have an account ?"),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return SignUpView();
+                                return const SignUpView();
                               }));
                             },
-                            child: Text(" Sign Up",
+                            child: const Text(" Sign Up",
                                 style: TextStyle(color: Colors.blue)),
                           )
                         ],

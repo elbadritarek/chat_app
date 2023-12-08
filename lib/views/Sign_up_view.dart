@@ -21,13 +21,13 @@ class SignUpView extends StatelessWidget {
                 'assets/images/icon.png',
                 height: 100,
               ),
-              Text(
+              const Text(
                 "Sign Up",
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 60,
           ),
           Expanded(
@@ -35,7 +35,7 @@ class SignUpView extends StatelessWidget {
             height: double.maxFinite,
             decoration: BoxDecoration(
                 color: Colors.grey[300],
-                borderRadius: BorderRadius.horizontal(
+                borderRadius: const BorderRadius.horizontal(
                     right: Radius.circular(18), left: Radius.circular(18))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -54,11 +54,11 @@ class SignUpView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       customTextFeild(hintText: "first name"),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
@@ -70,11 +70,11 @@ class SignUpView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       customTextFeild(hintText: "last name"),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
@@ -86,11 +86,11 @@ class SignUpView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       customTextFeild(hintText: "Example@gmail.com"),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
@@ -102,19 +102,19 @@ class SignUpView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       customTextFeild(hintText: "*********"),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
-                          Text("alraedy have an account ?"),
+                          const Text("alraedy have an account ?"),
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            child: Text(" Sign In",
+                            child: const Text(" Sign In",
                                 style: TextStyle(color: Colors.blue)),
                           )
                         ],
