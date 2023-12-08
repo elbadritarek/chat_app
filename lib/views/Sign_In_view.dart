@@ -1,4 +1,5 @@
 import 'package:chatapp/views/Sign_up_view.dart';
+import 'package:chatapp/views/widgets/custom_button.dart';
 import 'package:chatapp/views/widgets/custom_text_from_feild.dart';
 import 'package:flutter/material.dart';
 
@@ -40,52 +41,61 @@ class SignInView extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Your Email",
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                      Row(
+                        children: [
+                          Text(
+                            "Your Email",
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      customTextFeild(hintText: "Example@gmail.com"),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Your Password",
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      customTextFeild(hintText: "*********"),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text("don't have an account ?"),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return SignUpView();
+                              }));
+                            },
+                            child: Text(" Sign Up",
+                                style: TextStyle(color: Colors.blue)),
+                          )
+                        ],
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  customTextFeild(hintText: "Example@gmail.com"),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Your Password",
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  customTextFeild(hintText: "*********"),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Text("don't have an account ?"),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return SignUpView();
-                          }));
-                        },
-                        child: Text(" Sign Up",
-                            style: TextStyle(color: Colors.blue)),
-                      )
-                    ],
+                  customBottum(
+                    text: "Sign In",
+                    onTap: () {},
                   )
                 ],
               ),
