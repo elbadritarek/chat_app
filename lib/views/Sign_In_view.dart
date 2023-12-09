@@ -46,7 +46,7 @@ class SignInView extends StatelessWidget {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
+                      const Row(
                         children: [
                           Text(
                             "Your Email",
@@ -62,7 +62,7 @@ class SignInView extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Row(
+                      const Row(
                         children: [
                           Text(
                             "Your Password",
