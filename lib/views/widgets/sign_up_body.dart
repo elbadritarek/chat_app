@@ -148,7 +148,9 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                               Navigator.pushReplacement(
                                   _formKey.currentContext!,
                                   MaterialPageRoute(builder: (context) {
-                                return HomeView();
+                                return HomeView(
+                                  user: credential.user!,
+                                );
                               }));
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'weak-password') {

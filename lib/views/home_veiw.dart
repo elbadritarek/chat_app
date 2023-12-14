@@ -1,11 +1,10 @@
 import 'package:chatapp/views/widgets/bottom_appbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({
-    super.key,
-  });
-
+  const HomeView({super.key, required this.user});
+  final User user;
   @override
   State<HomeView> createState() => _HomeViewState();
 }
@@ -22,13 +21,13 @@ class _HomeViewState extends State<HomeView> {
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(
+              backgroundImage: NetworkImage(widget.user.photoURL ??
                   "https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg"),
             ),
             const SizedBox(width: 8),
             Column(
               children: [
-                Text("tarekElbadri"),
+                Text(widget.user.displayName!),
                 Center(
                   child: Row(
                     children: [

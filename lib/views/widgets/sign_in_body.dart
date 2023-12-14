@@ -122,7 +122,9 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                               data: "Sign In success");
                           Navigator.pushReplacement(_formKey.currentContext!,
                               MaterialPageRoute(builder: (context) {
-                            return HomeView();
+                            return HomeView(
+                              user: credential.user!,
+                            );
                           }));
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'user-not-found') {
