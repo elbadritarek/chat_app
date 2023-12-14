@@ -114,7 +114,7 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
                         try {
-                          await FirebaseAuth.instance
+                          final credential = await FirebaseAuth.instance
                               .signInWithEmailAndPassword(
                                   email: emailAddress!, password: password!);
                           showSnacBar(

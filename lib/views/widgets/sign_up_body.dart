@@ -133,7 +133,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
                             try {
-                              await FirebaseAuth.instance
+                              final credential = await FirebaseAuth.instance
                                   .createUserWithEmailAndPassword(
                                 email: emailAddress!,
                                 password: password!,
