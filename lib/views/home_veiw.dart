@@ -48,6 +48,7 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: PageView(
         controller: pageController,
+        physics: NeverScrollableScrollPhysics(),
         children: const [
           MessageBody(),
           callsBody(),
@@ -59,10 +60,3 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 }
-
-
-
-
-
-
-
