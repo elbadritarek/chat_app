@@ -1,4 +1,8 @@
+import 'package:chatapp/views/widgets/Message_body.dart';
 import 'package:chatapp/views/widgets/bottom_appbar.dart';
+import 'package:chatapp/views/widgets/calls_body.dart';
+import 'package:chatapp/views/widgets/explore_body.dart';
+import 'package:chatapp/views/widgets/groups_body.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -56,38 +60,9 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
-class MessageBody extends StatelessWidget {
-  const MessageBody({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
 
-class callsBody extends StatelessWidget {
-  const callsBody({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
 
-class groupsBody extends StatelessWidget {
-  const groupsBody({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
 
-class exploreBody extends StatelessWidget {
-  const exploreBody({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
