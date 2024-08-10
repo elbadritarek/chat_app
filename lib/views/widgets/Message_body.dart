@@ -1,16 +1,58 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:chatapp/models/UserModel.dart';
+import 'package:chatapp/services/chat/caht_srvices.dart';
 import 'package:flutter/material.dart';
 
-class MessageBody extends StatelessWidget {
+class MessageBody extends StatefulWidget {
   const MessageBody({super.key});
 
   @override
+  State<MessageBody> createState() => _MessageBodyState();
+}
+
+class _MessageBodyState extends State<MessageBody> {
+  final ChatService _chatService = ChatService();
+
+  @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 10,
-      itemBuilder: (BuildContext context, int index) {
-        return ProfileMessageItem();
+    return _BulidUserList();
+    // return ListView.builder(
+    //   itemCount: 10,
+    //   itemBuilder: (BuildContext context, int index) {
+    //     return _BulidUserList();
+    //   },
+    // );
+  }
+
+  Widget _BulidUserList() {
+    return StreamBuilder<List<UserModel>>(
+      stream: _chatService.getUserStream(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(child: Text('No users found.'));
+        }
+
+        List<UserModel> users = snapshot.data!;
+
+        return ListView.builder(
+          itemCount: users.length,
+          itemBuilder: (context, index) {
+            UserModel user = users[index];
+            return ListTile(
+              leading: user.photoURL.isNotEmpty
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(user.photoURL),
+                    )
+                  : CircleAvatar(child: Icon(Icons.person)),
+              title: Text(
+                  user.displayName.isNotEmpty ? user.displayName : 'No Name'),
+              subtitle: Text(user.email),
+            );
+          },
+        );
       },
     );
   }

@@ -1,6 +1,7 @@
 import 'package:chatapp/views/home_veiw.dart';
 import 'package:chatapp/views/widgets/custom_button.dart';
 import 'package:chatapp/views/widgets/custom_text_from_feild.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,8 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
 
   String? emailAddress;
   String? password;
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -152,6 +155,17 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                                   user: credential.user!,
                                 );
                               }));
+                              _firestore
+                                  .collection("users")
+                                  .doc(credential.user!.uid)
+                                  .set({
+                                'uid': credential.user!.uid,
+                                "email": credential.user!.email,
+                                'displayName':
+                                    credential.user!.displayName ?? '',
+                                'photoURL': credential.user!.photoURL ?? '',
+                                'createdAt': FieldValue.serverTimestamp(),
+                              });
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'weak-password') {
                                 showSnacBar(

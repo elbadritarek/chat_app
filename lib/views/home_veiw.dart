@@ -31,7 +31,7 @@ class _HomeViewState extends State<HomeView> {
             const SizedBox(width: 8),
             Column(
               children: [
-                Text(widget.user.displayName!),
+                Text(widget.user.displayName ?? "user"),
                 Center(
                   child: Row(
                     children: [

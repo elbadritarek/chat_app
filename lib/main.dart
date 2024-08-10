@@ -12,7 +12,7 @@ Future<void> main(List<String> args) async {
   runApp(const ChatApp());
 }
 
-class ChatApp extends StatelessWidget {
+class ChatApp extends StatelessWidget  {
   const ChatApp({super.key});
 
   @override
