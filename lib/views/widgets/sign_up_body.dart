@@ -141,9 +141,26 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                                 email: emailAddress!,
                                 password: password!,
                               );
-                              FirebaseAuth.instance.currentUser!
-                                  .updateDisplayName(username);
+                              User? user = credential.user;
 
+                              await user!.updateDisplayName(username);
+                              await user.reload();
+                              _firestore
+                                  .collection("users")
+                                  .doc(credential.user!.uid)
+                                  .set({
+                                'uid': credential.user!.uid,
+                                "email": credential.user!.email,
+                                'displayName':
+                                    credential.user!.displayName ?? username,
+                                'photoURL': credential.user!.photoURL ?? '',
+                                'createdAt': FieldValue.serverTimestamp(),
+                              });
+                              final updatedUser =
+                                  FirebaseAuth.instance.currentUser;
+
+                              // Now, use updatedUser.displayName
+                              // print(updatedUser?.displayName);
                               showSnacBar(
                                   context: _formKey.currentContext,
                                   data: "Sign_up success!");
@@ -152,20 +169,9 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                                   _formKey.currentContext!,
                                   MaterialPageRoute(builder: (context) {
                                 return HomeView(
-                                  user: credential.user!,
+                                  user: updatedUser!,
                                 );
                               }));
-                              _firestore
-                                  .collection("users")
-                                  .doc(credential.user!.uid)
-                                  .set({
-                                'uid': credential.user!.uid,
-                                "email": credential.user!.email,
-                                'displayName':
-                                    credential.user!.displayName ?? '',
-                                'photoURL': credential.user!.photoURL ?? '',
-                                'createdAt': FieldValue.serverTimestamp(),
-                              });
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'weak-password') {
                                 showSnacBar(
