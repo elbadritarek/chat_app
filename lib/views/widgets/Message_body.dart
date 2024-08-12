@@ -1,10 +1,11 @@
 import 'package:chatapp/models/UserModel.dart';
 import 'package:chatapp/services/chat/caht_srvices.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MessageBody extends StatefulWidget {
-  const MessageBody({super.key});
-
+  const MessageBody( {super.key, required this.currentUser});
+  final String currentUser;
   @override
   State<MessageBody> createState() => _MessageBodyState();
 }
@@ -14,7 +15,7 @@ class _MessageBodyState extends State<MessageBody> {
 
   @override
   Widget build(BuildContext context) {
-    return _BulidUserList();
+    return _BulidUserList(widget.currentUser);
     // return ListView.builder(
     //   itemCount: 10,
     //   itemBuilder: (BuildContext context, int index) {
@@ -23,9 +24,9 @@ class _MessageBodyState extends State<MessageBody> {
     // );
   }
 
-  Widget _BulidUserList() {
+  Widget _BulidUserList(String uid) {
     return StreamBuilder<List<UserModel>>(
-      stream: _chatService.getUserStream(),
+      stream: _chatService.getUserStream(currentUser: uid),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());

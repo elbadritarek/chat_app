@@ -155,6 +155,8 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                                     credential.user!.displayName ?? username,
                                 'photoURL': credential.user!.photoURL ?? '',
                                 'createdAt': FieldValue.serverTimestamp(),
+                                'friend':  [],
+                                'requestFriend': [],
                               });
                               final updatedUser =
                                   FirebaseAuth.instance.currentUser;

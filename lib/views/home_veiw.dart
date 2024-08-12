@@ -49,8 +49,8 @@ class _HomeViewState extends State<HomeView> {
       body: PageView(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
-        children: const [
-          MessageBody(),
+        children:  [
+          MessageBody( currentUser: widget.user.uid),
           callsBody(),
           groupsBody(),
           exploreBody(),
