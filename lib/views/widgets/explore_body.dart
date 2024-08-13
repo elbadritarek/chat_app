@@ -1,5 +1,6 @@
 import 'package:chatapp/models/UserModel.dart';
 import 'package:chatapp/services/chat/caht_srvices.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class exploreBody extends StatefulWidget {
@@ -11,7 +12,7 @@ class exploreBody extends StatefulWidget {
 
 class _exploreBodyState extends State<exploreBody> {
   final ChatService _chatService = ChatService();
-
+  bool _isFriendRequset = false;
   @override
   Widget build(BuildContext context) {
     return _BulidUserList(widget.currentUser);
@@ -25,7 +26,7 @@ class _exploreBodyState extends State<exploreBody> {
 
   Widget _BulidUserList(String uid) {
     return StreamBuilder<List<UserModel>>(
-      stream: _chatService.getUserStream(currentUser: uid),
+      stream: _chatService.getAllUsersStream(currentUser: uid),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -36,7 +37,6 @@ class _exploreBodyState extends State<exploreBody> {
         }
 
         List<UserModel> users = snapshot.data!;
-
         return ListView.builder(
           itemCount: users.length,
           itemBuilder: (context, index) {
@@ -57,8 +57,17 @@ class _exploreBodyState extends State<exploreBody> {
               title: Text(
                   user.displayName.isNotEmpty ? user.displayName : 'No Name'),
               subtitle: Text(user.email),
-              trailing:
-                  IconButton(onPressed: () {}, icon: Icon(Icons.person_add)),
+              trailing: IconButton(
+                  onPressed: () async {
+                    await _chatService.addUserIdToFriends(uid, user.uid);
+                    await _chatService.addUserIdToFriends(user.uid, uid);
+                    setState(() {
+                      _isFriendRequset = !_isFriendRequset;
+                    });
+                  },
+                  icon: _isFriendRequset
+                      ? Icon(Icons.person_add)
+                      : Icon(Icons.person)),
             );
           },
         );

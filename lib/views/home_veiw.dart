@@ -2,7 +2,7 @@ import 'package:chatapp/views/widgets/Message_body.dart';
 import 'package:chatapp/views/widgets/bottom_appbar.dart';
 import 'package:chatapp/views/widgets/calls_body.dart';
 import 'package:chatapp/views/widgets/explore_body.dart';
-import 'package:chatapp/views/widgets/groups_body.dart';
+import 'package:chatapp/views/widgets/friends_body.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -49,11 +49,11 @@ class _HomeViewState extends State<HomeView> {
       body: PageView(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
-        children:  [
+        children: [
           MessageBody(),
           callsBody(),
-          groupsBody(),
-          exploreBody( currentUser: widget.user.uid),
+          friendsBody(),
+          exploreBody(currentUser: widget.user.uid),
         ],
       ),
       bottomNavigationBar: bottomAppBar(control: pageController),

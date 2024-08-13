@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class groupsBody extends StatelessWidget {
-  const groupsBody({super.key});
+class friendsBody extends StatelessWidget {
+  const friendsBody({super.key});
 
   @override
   Widget build(BuildContext context) {
