@@ -52,7 +52,7 @@ class _HomeViewState extends State<HomeView> {
         children: [
           MessageBody(),
           callsBody(),
-          friendsBody(),
+          friendsBody(currentUser: widget.user.uid),
           exploreBody(currentUser: widget.user.uid),
         ],
       ),

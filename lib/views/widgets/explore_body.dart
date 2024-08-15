@@ -1,6 +1,5 @@
 import 'package:chatapp/models/UserModel.dart';
 import 'package:chatapp/services/chat/caht_srvices.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class exploreBody extends StatefulWidget {
@@ -11,8 +10,7 @@ class exploreBody extends StatefulWidget {
 }
 
 class _exploreBodyState extends State<exploreBody> {
-  final ChatService _chatService = ChatService();
-  bool _isFriendRequset = false;
+  final ChatService _chatService = ChatService(); 
   @override
   Widget build(BuildContext context) {
     return _BulidUserList(widget.currentUser);
@@ -24,12 +22,12 @@ class _exploreBodyState extends State<exploreBody> {
     // );
   }
 
-  Widget _BulidUserList(String uid) {
+Widget _BulidUserList(String uid) {
     return StreamBuilder<List<UserModel>>(
       stream: _chatService.getAllUsersStream(currentUser: uid),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          // return Center(child: CircularProgressIndicator());
         }
 
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -41,33 +39,41 @@ class _exploreBodyState extends State<exploreBody> {
           itemCount: users.length,
           itemBuilder: (context, index) {
             UserModel user = users[index];
-            return ListTile(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfileExploreItem(),
-                    ));
-              },
-              leading: user.photoURL.isNotEmpty
-                  ? CircleAvatar(
-                      backgroundImage: NetworkImage(user.photoURL),
-                    )
-                  : CircleAvatar(child: Icon(Icons.person)),
-              title: Text(
-                  user.displayName.isNotEmpty ? user.displayName : 'No Name'),
-              subtitle: Text(user.email),
-              trailing: IconButton(
-                  onPressed: () async {
-                    await _chatService.addUserIdToFriends(uid, user.uid);
-                    await _chatService.addUserIdToFriends(user.uid, uid);
-                    setState(() {
-                      _isFriendRequset = !_isFriendRequset;
-                    });
+            return FutureBuilder<bool>(
+              future: _chatService.isFriend(uid, user.uid),
+              builder: (context, isFriendSnapshot) {
+                if (!isFriendSnapshot.hasData) {
+                  return CircularProgressIndicator();
+                }
+                bool isFriend = isFriendSnapshot.data!;
+
+                return ListTile(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfileExploreItem(),
+                        ));
                   },
-                  icon: _isFriendRequset
-                      ? Icon(Icons.person_add)
-                      : Icon(Icons.person)),
+                  leading: user.photoURL.isNotEmpty
+                      ? CircleAvatar(
+                          backgroundImage: NetworkImage(user.photoURL),
+                        )
+                      : CircleAvatar(child: Icon(Icons.person)),
+                  title: Text(
+                      user.displayName.isNotEmpty ? user.displayName : 'No Name'),
+                  subtitle: Text(user.email),
+                  trailing: IconButton(
+                      onPressed: () async {
+                       
+                          await _chatService.addUserIdToFriends(uid, user.uid);
+                          await _chatService.addUserIdToFriends(user.uid, uid);
+                       
+                        setState(() {});
+                      },
+                      icon: Icon(isFriend ? Icons.person : Icons.person_add)),
+                );
+              },
             );
           },
         );
@@ -75,6 +81,8 @@ class _exploreBodyState extends State<exploreBody> {
     );
   }
 }
+
+
 
 // class ProfileMessageItem extends StatelessWidget {
 //   const ProfileMessageItem({super.key});
