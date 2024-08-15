@@ -1,4 +1,5 @@
 import 'package:chatapp/services/chat/caht_srvices.dart';
+import 'package:chatapp/views/widgets/chat_boblbe.dart';
 import 'package:chatapp/views/widgets/custom_text_from_feild.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -61,7 +62,7 @@ class ProfileItem extends StatelessWidget {
       crossAxisAlignment:
           isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        Text(data['message']),
+        chatBobble(message: data['message'], isCurrent: isCurrentUser)
       ],
     );
   }
