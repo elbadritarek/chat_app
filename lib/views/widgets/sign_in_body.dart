@@ -67,6 +67,7 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                         height: 10,
                       ),
                       customTextFeild(
+                        textController: TextEditingController(),
                           hintText: "Example@gmail.com",
                           onChange: (data) {
                             emailAddress = data;
@@ -87,6 +88,7 @@ class _SignInViewBodyState extends State<SignInViewBody> {
                         height: 10,
                       ),
                       customTextFeild(
+                        textController: TextEditingController(),
                           hintText: "*********",
                           onChange: (data) {
                             password = data;

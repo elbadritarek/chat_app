@@ -1,10 +1,13 @@
 import 'package:chatapp/models/UserModel.dart';
 import 'package:chatapp/services/chat/caht_srvices.dart';
-import 'package:chatapp/views/widgets/explore_body.dart';
+import 'package:chatapp/views/widgets/ProfileItem.dart';
 import 'package:flutter/material.dart';
 
 class friendsBody extends StatefulWidget {
-  const friendsBody({super.key, required this.currentUser,});
+  const friendsBody({
+    super.key,
+    required this.currentUser,
+  });
   final String currentUser;
   @override
   State<friendsBody> createState() => _friendsBodyState();
@@ -15,12 +18,7 @@ class _friendsBodyState extends State<friendsBody> {
   @override
   Widget build(BuildContext context) {
     return _BulidUserList(widget.currentUser);
-    // return ListView.builder(
-    //   itemCount: 10,
-    //   itemBuilder: (BuildContext context, int index) {
-    //     return _BulidUserList();
-    //   },
-    // );
+
   }
 
   Widget _BulidUserList(String uid) {
@@ -45,7 +43,7 @@ class _friendsBodyState extends State<friendsBody> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfileExploreItem(),
+                      builder: (context) => ProfileItem(receiverEmail: users[index].email,recieverID: users[index].uid),
                     ));
               },
               leading: user.photoURL.isNotEmpty

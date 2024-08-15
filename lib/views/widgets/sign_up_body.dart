@@ -71,6 +71,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                             height: 10,
                           ),
                           customTextFeild(
+                            textController: TextEditingController(),
                               hintText: "Username",
                               onChange: (data) {
                                 username = data;
@@ -91,6 +92,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                             height: 10,
                           ),
                           customTextFeild(
+                            textController: TextEditingController(),
                               hintText: "Example@gmail.com",
                               onChange: (data) {
                                 emailAddress = data;
@@ -111,6 +113,7 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                             height: 10,
                           ),
                           customTextFeild(
+                            textController: TextEditingController(),
                               hintText: "*********",
                               onChange: (data) {
                                 password = data;

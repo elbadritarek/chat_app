@@ -1,5 +1,6 @@
 import 'package:chatapp/models/UserModel.dart';
 import 'package:chatapp/services/chat/caht_srvices.dart';
+import 'package:chatapp/views/widgets/ProfileItem.dart';
 import 'package:flutter/material.dart';
 
 class exploreBody extends StatefulWidget {
@@ -10,7 +11,7 @@ class exploreBody extends StatefulWidget {
 }
 
 class _exploreBodyState extends State<exploreBody> {
-  final ChatService _chatService = ChatService(); 
+  final ChatService _chatService = ChatService();
   @override
   Widget build(BuildContext context) {
     return _BulidUserList(widget.currentUser);
@@ -22,7 +23,7 @@ class _exploreBodyState extends State<exploreBody> {
     // );
   }
 
-Widget _BulidUserList(String uid) {
+  Widget _BulidUserList(String uid) {
     return StreamBuilder<List<UserModel>>(
       stream: _chatService.getAllUsersStream(currentUser: uid),
       builder: (context, snapshot) {
@@ -52,7 +53,7 @@ Widget _BulidUserList(String uid) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ProfileExploreItem(),
+                          builder: (context) => ProfileItem(receiverEmail: users[index].email,recieverID: users[index].uid),
                         ));
                   },
                   leading: user.photoURL.isNotEmpty
@@ -60,15 +61,15 @@ Widget _BulidUserList(String uid) {
                           backgroundImage: NetworkImage(user.photoURL),
                         )
                       : CircleAvatar(child: Icon(Icons.person)),
-                  title: Text(
-                      user.displayName.isNotEmpty ? user.displayName : 'No Name'),
+                  title: Text(user.displayName.isNotEmpty
+                      ? user.displayName
+                      : 'No Name'),
                   subtitle: Text(user.email),
                   trailing: IconButton(
                       onPressed: () async {
-                       
-                          await _chatService.addUserIdToFriends(uid, user.uid);
-                          await _chatService.addUserIdToFriends(user.uid, uid);
-                       
+                        await _chatService.addUserIdToFriends(uid, user.uid);
+                        await _chatService.addUserIdToFriends(user.uid, uid);
+
                         setState(() {});
                       },
                       icon: Icon(isFriend ? Icons.person : Icons.person_add)),
@@ -136,11 +137,4 @@ Widget _BulidUserList(String uid) {
 //   }
 // }
 
-class ProfileExploreItem extends StatelessWidget {
-  const ProfileExploreItem({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
-  }
-}
