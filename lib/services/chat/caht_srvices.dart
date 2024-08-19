@@ -150,6 +150,36 @@ class ChatService {
         .collection("chat_room")
         .doc(chatRoomID)
         .collection("message")
-        .orderBy("timestamp", descending: false).snapshots();
+        .orderBy("timestamp", descending: false)
+        .snapshots();
+  }
+
+  Future<bool> areTheyMassages(String recieverId) async {
+    final String currentUser = _firebaseAuth.currentUser!.uid;
+    List<String> ids = [currentUser, recieverId];
+    ids.sort();
+    String chatRoomID = ids.join("_");
+    QuerySnapshot<Map<String, dynamic>> messageDoc =
+        await _firestore.collection("chat_room").get();
+
+    return messageDoc.docs.contains(chatRoomID);
+  }
+
+  Future<bool> areTheyMessaging(String friendUserId) async {
+    // Assuming you have a "messages" collection where you store user messages
+    final String currentUser = _firebaseAuth.currentUser!.uid;
+
+    List<String> ids = [currentUser, friendUserId];
+    ids.sort();
+    String chatRoomID = ids.join("_");
+
+    QuerySnapshot querySnapshot = await _firestore
+        .collection("chat_room")
+        .doc(chatRoomID)
+        .collection("message")
+        .limit(1)
+        .get();
+
+    return querySnapshot.docs.isNotEmpty;
   }
 }
