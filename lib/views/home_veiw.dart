@@ -51,7 +51,7 @@ class _HomeViewState extends State<HomeView> {
         physics: NeverScrollableScrollPhysics(),
         children: [
           MessageBody(currentUser: widget.user.uid),
-          callsBody(),
+          callsBody(currentUser: widget.user.uid),
           friendsBody(currentUser: widget.user.uid),
           exploreBody(currentUser: widget.user.uid),
         ],
