@@ -6,18 +6,21 @@ class customTextFeild extends StatelessWidget {
       required this.hintText,
       this.maxLines = 1,
       this.onSaved,
-      this.onChange,required this.textController});
+      this.onChange,
+      required this.textController,this.flag=false});
   final String hintText;
   final int maxLines;
   final void Function(String?)? onSaved;
   final void Function(String?)? onChange;
   final TextEditingController textController;
+  final bool flag;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: textController,
       onChanged: onChange,
       onSaved: onSaved,
+      obscureText: flag,
       validator: (value) {
         if (value?.isEmpty ?? true) {
           return "this feild is required";

@@ -1,6 +1,7 @@
+import 'package:chatapp/controllers/chat_controllers.dart';
 import 'package:chatapp/models/UserModel.dart';
 import 'package:chatapp/services/chat/caht_srvices.dart';
-import 'package:chatapp/views/widgets/ProfileItem.dart';
+import 'package:chatapp/views/chat/chat_view.dart';
 import 'package:flutter/material.dart';
 
 class friendsBody extends StatefulWidget {
@@ -14,16 +15,15 @@ class friendsBody extends StatefulWidget {
 }
 
 class _friendsBodyState extends State<friendsBody> {
-  final ChatService _chatService = ChatService();
+  final ChatController _chatController = ChatController(ChatService());
   @override
   Widget build(BuildContext context) {
     return _BulidUserList(widget.currentUser);
-
   }
 
   Widget _BulidUserList(String uid) {
     return StreamBuilder<List<UserModel>>(
-      stream: _chatService.getAllFriendsStream(currentUser: uid),
+      stream: _chatController.getAllFriendsStream(uid),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -43,7 +43,9 @@ class _friendsBodyState extends State<friendsBody> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfileItem(receiverEmail: users[index].email,recieverID: users[index].uid),
+                      builder: (context) => ChatView(
+                          receiverEmail: users[index].email,
+                          recieverID: users[index].uid),
                     ));
               },
               leading: user.photoURL.isNotEmpty

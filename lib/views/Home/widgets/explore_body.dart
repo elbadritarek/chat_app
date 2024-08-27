@@ -1,6 +1,7 @@
+import 'package:chatapp/controllers/chat_controllers.dart';
 import 'package:chatapp/models/UserModel.dart';
 import 'package:chatapp/services/chat/caht_srvices.dart';
-import 'package:chatapp/views/widgets/ProfileItem.dart';
+import 'package:chatapp/views/chat/chat_view.dart';
 import 'package:flutter/material.dart';
 
 class exploreBody extends StatefulWidget {
@@ -11,7 +12,7 @@ class exploreBody extends StatefulWidget {
 }
 
 class _exploreBodyState extends State<exploreBody> {
-  final ChatService _chatService = ChatService();
+  final ChatController _chatController = ChatController(ChatService());
   @override
   Widget build(BuildContext context) {
     return _BulidUserList(widget.currentUser);
@@ -25,7 +26,7 @@ class _exploreBodyState extends State<exploreBody> {
 
   Widget _BulidUserList(String uid) {
     return StreamBuilder<List<UserModel>>(
-      stream: _chatService.getAllUsersStream(currentUser: uid),
+      stream: _chatController.getAllUsersStream(currentUser: uid),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // return Center(child: CircularProgressIndicator());
@@ -41,7 +42,7 @@ class _exploreBodyState extends State<exploreBody> {
           itemBuilder: (context, index) {
             UserModel user = users[index];
             return FutureBuilder<bool>(
-              future: _chatService.isFriend(uid, user.uid),
+              future: _chatController.isFriend(uid, user.uid),
               builder: (context, isFriendSnapshot) {
                 if (!isFriendSnapshot.hasData) {
                   return CircularProgressIndicator();
@@ -53,7 +54,9 @@ class _exploreBodyState extends State<exploreBody> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ProfileItem(receiverEmail: users[index].email,recieverID: users[index].uid),
+                          builder: (context) => ChatView(
+                              receiverEmail: users[index].email,
+                              recieverID: users[index].uid),
                         ));
                   },
                   leading: user.photoURL.isNotEmpty
@@ -67,8 +70,8 @@ class _exploreBodyState extends State<exploreBody> {
                   subtitle: Text(user.email),
                   trailing: IconButton(
                       onPressed: () async {
-                        await _chatService.addUserIdToFriends(uid, user.uid);
-                        await _chatService.addUserIdToFriends(user.uid, uid);
+                        await _chatController.toggleFriend(uid, user.uid);
+                        await _chatController.toggleFriend(user.uid, uid);
 
                         setState(() {});
                       },

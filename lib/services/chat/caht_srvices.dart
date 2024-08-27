@@ -1,11 +1,13 @@
-import 'package:chatapp/models/UserModel.dart';
-import 'package:chatapp/models/message.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../models/UserModel.dart';
+import '../../models/message.dart';
 
 class ChatService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
   Stream<List<UserModel>> getAllUsersStream({required String currentUser}) {
     return _firestore
         .collection("users")
@@ -13,91 +15,47 @@ class ChatService {
         .map((QuerySnapshot query) {
       List<UserModel> users = [];
       for (var user in query.docs) {
-        if (UserModel.fromDocument(user).uid != currentUser)
+        if (UserModel.fromDocument(user).uid != currentUser) {
           users.add(UserModel.fromDocument(user));
+        }
       }
       return users;
     });
   }
 
-  // Stream<UserModel> getUserStream({required String currentUser}) {
-  //   return _firestore
-  //       .collection("users")
-  //       .snapshots()
-  //       .map((QuerySnapshot query) {
-  //     return query.docs
-  //         .where((doc) => UserModel.fromDocument(doc).uid != currentUser)
-  //         .map((doc) => UserModel.fromDocument(doc));
-  //   }).expand((userList) => userList);
-  // }
   Future<UserModel> getUser({required String currentUser}) async {
     final DocumentSnapshot querySnapshot =
         await _firestore.collection("users").doc(currentUser).get();
-
     return UserModel.fromDocument(querySnapshot);
   }
 
-  Future<void> addUserIdToFriends(
-      String currentUserId, String friendUserId) async {
-    // Reference to the current user's document in the "users" collection
+  Future<void> toggleFriend(String currentUserId, String friendUserId) async {
     DocumentReference userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(currentUserId);
+        _firestore.collection('users').doc(currentUserId);
 
-    try {
-      // Fetch the current user's document
-      DocumentSnapshot docSnapshot = await userDocRef.get();
-
-      if (docSnapshot.exists) {
-        // Get the current friends array
-        List<dynamic> friends = docSnapshot.get('friends') ?? [];
-
-        if (friends.contains(friendUserId)) {
-          // If the friendUserId is already in the array, remove it
-          await userDocRef.update({
-            'friends': FieldValue.arrayRemove([friendUserId])
-          });
-          print("Friend removed successfully!");
-        } else {
-          // If the friendUserId is not in the array, add it
-          await userDocRef.update({
-            'friends': FieldValue.arrayUnion([friendUserId])
-          });
-          print("Friend added successfully!");
-        }
+    DocumentSnapshot docSnapshot = await userDocRef.get();
+    if (docSnapshot.exists) {
+      List<dynamic> friends = docSnapshot.get('friends') ?? [];
+      if (friends.contains(friendUserId)) {
+        await userDocRef.update({
+          'friends': FieldValue.arrayRemove([friendUserId])
+        });
       } else {
-        print("User document does not exist!");
+        await userDocRef.update({
+          'friends': FieldValue.arrayUnion([friendUserId])
+        });
       }
-    } catch (e) {
-      print("Failed to toggle friend: $e");
     }
   }
 
-  //  Stream<List<UserModel>> getAllFriendsStream({required String currentUser}) {
-  //   return _firestore
-  //       .collection("users").doc(currentUser).get({'friends'})
-
-  //       .snapshots()
-  //       .map((QuerySnapshot query) {
-  //     List<UserModel> users = [];
-  //     for (var user in query.docs) {
-  //       if (UserModel.fromDocument(user).uid != currentUser)
-  //         users.add(UserModel.fromDocument(user));
-  //     }
-  //     return users;
-  //   });
-  // }
   Stream<List<UserModel>> getAllFriendsStream({required String currentUser}) {
     return _firestore
         .collection("users")
         .doc(currentUser)
         .snapshots()
         .asyncMap((DocumentSnapshot userDoc) async {
-      // Check if the document exists
       if (userDoc.exists) {
-        // Get the list of friend UIDs
         List<dynamic> friendsList = userDoc.get('friends') ?? [];
-
-        // Fetch all friend documents from the users collection
         List<UserModel> friends = [];
         for (String friendId in friendsList) {
           DocumentSnapshot friendDoc =
@@ -120,17 +78,19 @@ class ChatService {
     return friends.contains(friendUserId);
   }
 
-  Future<void> sendMessage(String receiverId, message) async {
+  Future<void> sendMessage(String receiverId, String message) async {
     final String currentUserId = _firebaseAuth.currentUser!.uid;
     final String? currentUserEmail = _firebaseAuth.currentUser!.email;
-    final Timestamp timetamp = Timestamp.now();
+    final Timestamp timestamp = Timestamp.now();
 
     Message newMessage = Message(
-        message: message,
-        senderId: currentUserId,
-        senderEmail: currentUserEmail!,
-        recieverId: receiverId,
-        timestamp: timetamp);
+      message: message,
+      senderId: currentUserId,
+      senderEmail: currentUserEmail!,
+      recieverId: receiverId,
+      timestamp: timestamp,
+    );
+
     List<String> ids = [currentUserId, receiverId];
     ids.sort();
     String chatRoomID = ids.join("_");
@@ -142,8 +102,8 @@ class ChatService {
         .add(newMessage.toMap());
   }
 
-  Stream<QuerySnapshot> getMessage(String UserId, otherUserId) {
-    List<String> ids = [UserId, otherUserId];
+  Stream<QuerySnapshot> getMessageStream(String userId, String otherUserId) {
+    List<String> ids = [userId, otherUserId];
     ids.sort();
     String chatRoomID = ids.join("_");
     return _firestore
@@ -154,21 +114,8 @@ class ChatService {
         .snapshots();
   }
 
-  Future<bool> areTheyMassages(String recieverId) async {
-    final String currentUser = _firebaseAuth.currentUser!.uid;
-    List<String> ids = [currentUser, recieverId];
-    ids.sort();
-    String chatRoomID = ids.join("_");
-    QuerySnapshot<Map<String, dynamic>> messageDoc =
-        await _firestore.collection("chat_room").get();
-
-    return messageDoc.docs.contains(chatRoomID);
-  }
-
   Future<bool> areTheyMessaging(String friendUserId) async {
-    // Assuming you have a "messages" collection where you store user messages
     final String currentUser = _firebaseAuth.currentUser!.uid;
-
     List<String> ids = [currentUser, friendUserId];
     ids.sort();
     String chatRoomID = ids.join("_");

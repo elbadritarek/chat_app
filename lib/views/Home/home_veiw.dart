@@ -1,8 +1,8 @@
-import 'package:chatapp/views/widgets/Message_body.dart';
-import 'package:chatapp/views/widgets/bottom_appbar.dart';
-import 'package:chatapp/views/widgets/calls_body.dart';
-import 'package:chatapp/views/widgets/explore_body.dart';
-import 'package:chatapp/views/widgets/friends_body.dart';
+import 'package:chatapp/views/Home/widgets/Message_body.dart';
+import 'package:chatapp/views/Home/widgets/bottom_appbar.dart';
+import 'package:chatapp/views/Home/widgets/calls_body.dart';
+import 'package:chatapp/views/Home/widgets/explore_body.dart';
+import 'package:chatapp/views/Home/widgets/friends_body.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

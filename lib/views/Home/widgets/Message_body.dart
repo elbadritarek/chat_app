@@ -1,7 +1,9 @@
 import 'package:chatapp/models/UserModel.dart';
 import 'package:chatapp/services/chat/caht_srvices.dart';
-import 'package:chatapp/views/widgets/ProfileItem.dart';
+import 'package:chatapp/views/chat/chat_view.dart';
 import 'package:flutter/material.dart';
+
+import '../../../controllers/chat_controllers.dart';
 
 class MessageBody extends StatefulWidget {
   const MessageBody({
@@ -15,7 +17,8 @@ class MessageBody extends StatefulWidget {
 }
 
 class _MessageBodyState extends State<MessageBody> {
-  final ChatService _chatService = ChatService();
+  // final ChatService _chatService = ChatService();
+  final ChatController _chatController = ChatController(ChatService());
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class _MessageBodyState extends State<MessageBody> {
 
   Widget _BulidUserList(String uid) {
     return StreamBuilder<List<UserModel>>(
-      stream: _chatService.getAllUsersStream(currentUser: uid),
+      stream: _chatController.getAllUsersStream(currentUser: uid),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -47,7 +50,7 @@ class _MessageBodyState extends State<MessageBody> {
           itemBuilder: (context, index) {
             UserModel user = users[index];
             return FutureBuilder<bool>(
-              future: _chatService.areTheyMessaging(user.uid),
+              future: _chatController.areTheyMessaging(user.uid),
               builder: (context, areTheyMassagesSnapshot) {
                 if (!areTheyMassagesSnapshot.hasData) {
                   return SizedBox();
@@ -61,7 +64,7 @@ class _MessageBodyState extends State<MessageBody> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ProfileItem(
+                                builder: (context) => ChatView(
                                     receiverEmail: users[index].email,
                                     recieverID: users[index].uid),
                               ));

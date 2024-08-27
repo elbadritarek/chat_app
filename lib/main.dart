@@ -1,4 +1,4 @@
-import 'package:chatapp/views/on_board.dart';
+import 'package:chatapp/views/onBoarding/on_board.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

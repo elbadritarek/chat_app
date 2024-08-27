@@ -1,9 +1,13 @@
+import 'package:chatapp/controllers/agora_controller.dart';
+import 'package:chatapp/controllers/chat_controllers.dart';
 import 'package:chatapp/models/UserModel.dart';
 import 'package:chatapp/services/agora.dart';
 import 'package:chatapp/services/chat/caht_srvices.dart';
-import 'package:chatapp/views/Voice_call_view.dart';
-import 'package:chatapp/views/widgets/ProfileItem.dart';
+import 'package:chatapp/views/chat/chat_view.dart';
+import 'package:chatapp/views/vocie_call/Voice_call_view.dart';
 import 'package:flutter/material.dart';
+
+import '../../../utils/settings.dart';
 
 class callsBody extends StatefulWidget {
   const callsBody({super.key, required this.currentUser});
@@ -14,8 +18,8 @@ class callsBody extends StatefulWidget {
 }
 
 class _callsBodyState extends State<callsBody> {
-  final ChatService _chatService = ChatService();
-  final AgoraService _agoraService = AgoraService();
+  final ChatController _chatController = ChatController(ChatService());
+  final AgoraController _agoraController = AgoraController(AgoraService());
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class _callsBodyState extends State<callsBody> {
 
   Widget _BulidUserList(String uid) {
     return StreamBuilder<List<UserModel>>(
-      stream: _chatService.getAllFriendsStream(currentUser: uid),
+      stream: _chatController.getAllFriendsStream(uid),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -44,7 +48,7 @@ class _callsBodyState extends State<callsBody> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfileItem(
+                      builder: (context) => ChatView(
                           receiverEmail: users[index].email,
                           recieverID: users[index].uid),
                     ));
@@ -59,8 +63,8 @@ class _callsBodyState extends State<callsBody> {
               subtitle: Text(user.email),
               trailing: IconButton(
                   onPressed: () async {
-                    await _agoraService.initializeAgora();
-
+                    await _agoraController.initializeAgora();
+                    await _agoraController.joinChannel(token, channel);
                     Navigator.push(
                         context,
                         MaterialPageRoute(

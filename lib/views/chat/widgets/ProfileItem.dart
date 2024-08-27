@@ -1,13 +1,12 @@
 import 'package:chatapp/services/chat/caht_srvices.dart';
-import 'package:chatapp/views/widgets/chat_boblbe.dart';
-import 'package:chatapp/views/widgets/custom_text_from_feild.dart';
+import 'package:chatapp/views/chat/widgets/chat_boblbe.dart';
+import 'package:chatapp/views/Shared_widgets/custom_text_from_feild.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfileItem extends StatelessWidget {
-  ProfileItem(
-      {super.key, required this.receiverEmail, required this.recieverID});
+  ProfileItem({super.key, required this.receiverEmail, required this.recieverID});
   final String receiverEmail;
   final String recieverID;
 
@@ -37,7 +36,7 @@ class ProfileItem extends StatelessWidget {
   Widget _buildMessageList() {
     String senderId = FirebaseAuth.instance.currentUser!.uid;
     return StreamBuilder(
-      stream: _chatService.getMessage(recieverID, senderId),
+      stream: _chatService.getMessageStream(recieverID, senderId),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Center(child: Text("error"));
