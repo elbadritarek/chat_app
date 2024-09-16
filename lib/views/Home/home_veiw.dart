@@ -19,9 +19,9 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: Drawer(),
+      endDrawer: const Drawer(),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(143, 176, 220, 243),
+        backgroundColor: const Color.fromARGB(143, 176, 220, 243),
         title: Row(
           children: [
             CircleAvatar(
@@ -32,7 +32,7 @@ class _HomeViewState extends State<HomeView> {
             Column(
               children: [
                 Text(widget.user.displayName ?? "user"),
-                Center(
+                const Center(
                   child: Row(
                     children: [
                       Icon(Icons.circle, size: 10, color: Colors.green),
@@ -48,7 +48,7 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: PageView(
         controller: pageController,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           MessageBody(currentUser: widget.user.uid),
           callsBody(currentUser: widget.user.uid),

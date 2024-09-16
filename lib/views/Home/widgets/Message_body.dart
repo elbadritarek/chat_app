@@ -1,46 +1,31 @@
 import 'package:chatapp/models/UserModel.dart';
-import 'package:chatapp/services/chat/caht_srvices.dart';
 import 'package:chatapp/views/chat/chat_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../controllers/chat_controllers.dart';
 
-class MessageBody extends StatefulWidget {
+class MessageBody extends StatelessWidget {
   const MessageBody({
     super.key,
     required this.currentUser,
   });
   final String currentUser;
 
-  @override
-  State<MessageBody> createState() => _MessageBodyState();
-}
-
-class _MessageBodyState extends State<MessageBody> {
   // final ChatService _chatService = ChatService();
-  final ChatController _chatController = ChatController(ChatService());
-
   @override
   Widget build(BuildContext context) {
-    return _BulidUserList(widget.currentUser);
-    // return ListView.builder(
-    //   itemCount: 10,
-    //   itemBuilder: (BuildContext context, int index) {
-    //     return _BulidUserList();
-    //   },
-    // );
-  }
+    final chatController = context.watch<ChatController>();
 
-  Widget _BulidUserList(String uid) {
     return StreamBuilder<List<UserModel>>(
-      stream: _chatController.getAllUsersStream(currentUser: uid),
+      stream: chatController.getAllUsersStream(currentUser: currentUser),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('No friends found.'));
+          return const Center(child: Text('No friends found.'));
         }
 
         List<UserModel> users = snapshot.data!;
@@ -50,10 +35,10 @@ class _MessageBodyState extends State<MessageBody> {
           itemBuilder: (context, index) {
             UserModel user = users[index];
             return FutureBuilder<bool>(
-              future: _chatController.areTheyMessaging(user.uid),
+              future: chatController.areTheyMessaging(user.uid),
               builder: (context, areTheyMassagesSnapshot) {
                 if (!areTheyMassagesSnapshot.hasData) {
-                  return SizedBox();
+                  return const SizedBox();
                 }
 
                 bool areTheyMassages = areTheyMassagesSnapshot.data!;
@@ -73,13 +58,13 @@ class _MessageBodyState extends State<MessageBody> {
                             ? CircleAvatar(
                                 backgroundImage: NetworkImage(user.photoURL),
                               )
-                            : CircleAvatar(child: Icon(Icons.person)),
+                            : const CircleAvatar(child: Icon(Icons.person)),
                         title: Text(user.displayName.isNotEmpty
                             ? user.displayName
                             : 'No Name'),
                         subtitle: Text(user.email),
                       )
-                    : SizedBox();
+                    : const SizedBox();
               },
             );
           },

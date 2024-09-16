@@ -1,3 +1,4 @@
+import 'package:chatapp/views/chat/widgets/ProfileItem.dart';
 import 'package:flutter/material.dart';
 
 class ChatView extends StatelessWidget {
@@ -7,7 +8,7 @@ class ChatView extends StatelessWidget {
   final String recieverID;
   @override
   Widget build(BuildContext context) {
-    return ChatView(
+    return chatViewBody(
       receiverEmail: receiverEmail,
       recieverID: recieverID,
     );

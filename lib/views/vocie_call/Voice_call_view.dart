@@ -26,22 +26,77 @@ class _VoiceCallViewState extends State<VoiceCallView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Voice Call"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            ElevatedButton(
-              onPressed: () async {
-                await _agoraController.leaveChannel();
-                Navigator.pop(context);
-              },
-              child: Icon(Icons.phone_disabled_rounded, size: 32),
-            ),
-          ],
-        ),
+      backgroundColor: const Color.fromARGB(255, 2, 23, 40),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  Container(
+                    height: 55,
+                    width: 55,
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(82, 158, 158, 158),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(100),
+                      ),
+                    ),
+                    child: const Icon(Icons.volume_up, size: 32, color: Colors.white),
+                  ),
+                  const Text(
+                    "Speaker",
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
+              GestureDetector(
+                onTap: () async {
+                  await _agoraController.leaveChannel();
+                  // Check if the widget is still mounted before navigating
+                  if (!context.mounted) return;
+
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  height: 75,
+                  width: 75,
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(100),
+                    ),
+                  ),
+                  child: const Icon(Icons.call_end, size: 48, color: Colors.white),
+                ),
+              ),
+              Column(
+                children: [
+                  Container(
+                    height: 55,
+                    width: 55,
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(82, 158, 158, 158),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(100),
+                      ),
+                    ),
+                    child: const Icon(Icons.mic, size: 32, color: Colors.white),
+                  ),
+                  const Text(
+                    "mute",
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 100,
+          )
+        ],
       ),
     );
   }

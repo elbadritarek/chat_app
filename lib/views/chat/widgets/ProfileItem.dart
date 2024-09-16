@@ -5,8 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class ProfileItem extends StatelessWidget {
-  ProfileItem({super.key, required this.receiverEmail, required this.recieverID});
+class chatViewBody extends StatelessWidget {
+  chatViewBody({super.key, required this.receiverEmail, required this.recieverID});
   final String receiverEmail;
   final String recieverID;
 
@@ -24,7 +24,7 @@ class ProfileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(143, 176, 220, 243),
+        backgroundColor: const Color.fromARGB(143, 176, 220, 243),
         title: Text(receiverEmail),
         centerTitle: true,
       ),
@@ -80,12 +80,12 @@ class ProfileItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Color.fromARGB(143, 176, 220, 243),
                   borderRadius: BorderRadius.all(Radius.circular(30))),
               child: IconButton(
                 onPressed: sendMessage,
-                icon: Icon(Icons.send),
+                icon: const Icon(Icons.send),
               ),
             ),
           ),

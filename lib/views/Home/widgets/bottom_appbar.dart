@@ -28,7 +28,7 @@ class _bottomAppBarState extends State<bottomAppBar> {
             height: 50,
             width: 60,
             color: selectIndex == 0
-                ? Color.fromARGB(143, 176, 220, 243)
+                ? const Color.fromARGB(143, 176, 220, 243)
                 : Colors.white,
             child: IconButton(
                 onPressed: () {
@@ -50,7 +50,7 @@ class _bottomAppBarState extends State<bottomAppBar> {
             height: 50,
             width: 60,
             color: selectIndex == 1
-                ? Color.fromARGB(143, 176, 220, 243)
+                ? const Color.fromARGB(143, 176, 220, 243)
                 : Colors.white,
             child: IconButton(
                 onPressed: () {
@@ -72,7 +72,7 @@ class _bottomAppBarState extends State<bottomAppBar> {
             height: 50,
             width: 60,
             color: selectIndex == 2
-                ? Color.fromARGB(143, 176, 220, 243)
+                ? const Color.fromARGB(143, 176, 220, 243)
                 : Colors.white,
             child: IconButton(
                 onPressed: () {
@@ -94,7 +94,7 @@ class _bottomAppBarState extends State<bottomAppBar> {
             height: 50,
             width: 60,
             color: selectIndex == 3
-                ? Color.fromARGB(143, 176, 220, 243)
+                ? const Color.fromARGB(143, 176, 220, 243)
                 : Colors.white,
             child: IconButton(
                 onPressed: () {

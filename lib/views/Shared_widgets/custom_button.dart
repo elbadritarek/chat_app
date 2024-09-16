@@ -6,15 +6,18 @@ class customBottum extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 50,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(8))),
-        child: Center(child: Text(text)),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 50,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8))),
+          child: Center(child: Text(text)),
+        ),
       ),
     );
   }

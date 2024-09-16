@@ -3,7 +3,7 @@ import 'package:chatapp/services/auth/firebase_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AuthController {
+class AuthController extends ChangeNotifier{
   final FirebaseAuthService _authService;
 
   AuthController(this._authService);
@@ -19,6 +19,7 @@ class AuthController {
         User? user =
             await _authService.signInWithEmailAndPassword(email, password);
         if (user != null) {
+             notifyListeners();
           onSuccess(user);
           _showSnackBar(context: context, data: "Sign In successful");
         } else {
@@ -45,6 +46,7 @@ class AuthController {
           password,
         );
         if (user != null) {
+             notifyListeners();
           onSuccess(user);
           _showSnackBar(context: context, data: "Sign Up successful");
         }

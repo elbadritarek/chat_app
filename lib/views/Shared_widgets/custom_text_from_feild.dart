@@ -28,6 +28,7 @@ class customTextFeild extends StatelessWidget {
           return null;
         }
       },
+      
       maxLines: maxLines,
       decoration: InputDecoration(
         hintText: hintText,

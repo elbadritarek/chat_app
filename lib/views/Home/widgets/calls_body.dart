@@ -2,33 +2,25 @@ import 'package:chatapp/controllers/agora_controller.dart';
 import 'package:chatapp/controllers/chat_controllers.dart';
 import 'package:chatapp/models/UserModel.dart';
 import 'package:chatapp/services/agora.dart';
-import 'package:chatapp/services/chat/caht_srvices.dart';
 import 'package:chatapp/views/chat/chat_view.dart';
 import 'package:chatapp/views/vocie_call/Voice_call_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../utils/settings.dart';
 
-class callsBody extends StatefulWidget {
+class callsBody extends StatelessWidget {
   const callsBody({super.key, required this.currentUser});
   final String currentUser;
 
   @override
-  State<callsBody> createState() => _callsBodyState();
-}
-
-class _callsBodyState extends State<callsBody> {
-  final ChatController _chatController = ChatController(ChatService());
-  final AgoraController _agoraController = AgoraController(AgoraService());
-
-  @override
   Widget build(BuildContext context) {
-    return _BulidUserList(widget.currentUser);
-  }
+    final AgoraController _agoraController = AgoraController(AgoraService());
 
-  Widget _BulidUserList(String uid) {
+    final chatController = context.watch<ChatController>();
+
     return StreamBuilder<List<UserModel>>(
-      stream: _chatController.getAllFriendsStream(uid),
+      stream: chatController.getAllFriendsStream(currentUser),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -65,13 +57,18 @@ class _callsBodyState extends State<callsBody> {
                   onPressed: () async {
                     await _agoraController.initializeAgora();
                     await _agoraController.joinChannel(token, channel);
+                    // Check if the widget is still mounted before navigating
+                    if (!context.mounted) return;
+
+                    // Now it's safe to navigate
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => VoiceCallView(),
-                        ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VoiceCallView(),
+                      ),
+                    );
                   },
-                  icon: Icon(Icons.phone)),
+                  icon: const Icon(Icons.phone)),
             );
           },
         );

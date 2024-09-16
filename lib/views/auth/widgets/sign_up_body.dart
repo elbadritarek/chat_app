@@ -1,37 +1,34 @@
-
 import 'package:chatapp/controllers/auth_controllers.dart';
 import 'package:chatapp/services/auth/firebase_services.dart';
 import 'package:chatapp/views/Home/home_veiw.dart';
 import 'package:chatapp/views/Shared_widgets/custom_button.dart';
 import 'package:chatapp/views/Shared_widgets/custom_text_from_feild.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-class SignUpViewBody extends StatefulWidget {
+class SignUpViewBody extends StatelessWidget {
   const SignUpViewBody({super.key});
 
   @override
-  State<SignUpViewBody> createState() => _SignUpViewBodyState();
-}
-
-class _SignUpViewBodyState extends State<SignUpViewBody> {
-  final _formKey = GlobalKey<FormState>();
-  String? username;
-  String? emailAddress;
-  String? password;
-
-  final AuthController _authController = AuthController(FirebaseAuthService());
-
-  @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+
+    String? username;
+
+    String? emailAddress;
+
+    String? password;
+
+    final AuthController authController = AuthController(FirebaseAuthService());
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         children: [
           Column(
             children: [
               Image.asset('assets/images/icon.png', height: 100),
-              const Text("Sign Up", style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold))
+              const Text("Sign Up",
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold))
             ],
           ),
           const SizedBox(height: 60),
@@ -55,7 +52,10 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                         children: [
                           const Row(
                             children: [
-                              Text("Your Username", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                              Text("Your Username",
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold)),
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -69,7 +69,10 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                           const SizedBox(height: 20),
                           const Row(
                             children: [
-                              Text("Your Email", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                              Text("Your Email",
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold)),
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -83,7 +86,10 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                           const SizedBox(height: 20),
                           const Row(
                             children: [
-                              Text("Your Password", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                              Text("Your Password",
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold)),
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -100,14 +106,15 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                       customBottum(
                         text: "Sign Up",
                         onTap: () async {
-                          _authController.signUp(
+                          authController.signUp(
                             username: username!,
                             email: emailAddress!,
                             password: password!,
-                            formKey: _formKey,
+                            formKey: formKey,
                             context: context,
                             onSuccess: (User user) {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                              Navigator.pushReplacement(context,
+                                  MaterialPageRoute(builder: (context) {
                                 return HomeView(user: user);
                               }));
                             },
